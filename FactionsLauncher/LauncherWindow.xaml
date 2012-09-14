@@ -1,0 +1,41 @@
+﻿<Window x:Class="FactionsLauncher.LauncherWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:redress="clr-namespace:Redress;assembly=Redress"
+        Title="Factions Launcher" Height="610" Width="1024" Closing="Window_Closing" Loaded="Window_Loaded" Icon="/Factions;component/icon.ico">
+    <Window.Resources>
+        <redress:Launcher x:Key="ViewModel" />
+    </Window.Resources>
+    <Grid DataContext="{Binding Source={StaticResource ViewModel}, Mode=OneWay}" Name="windowGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <WebBrowser Name="webBrowser" />
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ProgressBar Margin="6" Value="{Binding Path=PackageProgress, Mode=OneWay}" />
+            <Button Grid.Column="1" Width="100" Margin="6" Content="{Binding Path=Status, Mode=OneWay}" Click="Button_Click" IsEnabled="{Binding Path=Ready, Mode=OneWay}" />
+        </Grid>
+        <StatusBar Grid.Row="2" Height="22">
+            <ProgressBar Width="100" Value="{Binding Path=ItemProgress, Mode=OneWay}" Height="15" />
+            <TextBlock Text="{Binding Path=ItemSizeMegabytes, Mode=OneWay, StringFormat=\{0:F\} MB}" ToolTip="Current Item Size" />
+            <Separator />
+            <TextBlock Text="{Binding Path=RemainingMegabytes, Mode=OneWay, StringFormat=\{0:F\} MB}" ToolTip="Download Remaining" />
+            <Separator />
+            <TextBlock Text="{Binding Path=SpeedKilobytes, Mode=OneWay, StringFormat=\{0:F0\} KB/s}" ToolTip="Current Speed" />
+            <Separator />
+            <TextBlock Text="{Binding Path=ItemName, Mode=OneWay}" ToolTip="Current Item" />
+        </StatusBar>
+    </Grid>
+</Window>
