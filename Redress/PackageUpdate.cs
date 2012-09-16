@@ -6,7 +6,7 @@ using Redress.Support;
 namespace Redress
 {
     /// <summary>
-    /// Represents a package update.
+    /// Represents a collection of items to update.
     /// </summary>
     class PackageUpdate : AsyncOperation
     {

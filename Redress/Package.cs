@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Xml;
 using System.Xml.Linq;
 using Redress.Support;
-using System.Xml;
 
 namespace Redress
 {

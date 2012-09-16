@@ -4,7 +4,6 @@ using System.IO;
 using System.Net;
 using System.Xml;
 using System.Xml.Linq;
-using System.Configuration;
 
 namespace Redress
 {

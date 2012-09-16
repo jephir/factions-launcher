@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Net;
 using System.Xml;
-using System.IO;
 
 namespace Redress
 {
