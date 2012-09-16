@@ -15,13 +15,13 @@ namespace Redress.Support
         /// </summary>
         public bool CancellationPending { get; private set; }
 
-        protected void OnOperationProgressChanged(AsyncOperationProgressChangedEventArgs e)
+        protected virtual void OnOperationProgressChanged(AsyncOperationProgressChangedEventArgs e)
         {
             var handler = OperationProgressChanged;
             if (handler != null) handler(this, e);
         }
 
-        protected void OnOperationCompleted(EventArgs e)
+        protected virtual void OnOperationCompleted(EventArgs e)
         {
             var handler = OperationCompleted;
             if (handler != null) handler(this, e);

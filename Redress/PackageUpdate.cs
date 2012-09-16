@@ -62,6 +62,13 @@ namespace Redress
             if (item != null) item.CancelAsync();
         }
 
+        protected override void OnOperationCompleted(EventArgs e)
+        {
+            base.OnOperationCompleted(e);
+
+            inProgress = false;
+        }
+
         /// <summary>
         /// Updates the next item in the update queue.
         /// </summary>
