@@ -108,10 +108,24 @@ namespace Redress
 
                 client.DownloadDataCompleted += (sender, e) =>
                 {
-                    if (e.Error != null) Launcher.Notify("Skipping updating file \"" + LocalPath + "\" because it could not be downloaded.");
-                    else if (e.Cancelled) OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.Cancelled));
-                    else if (HashEquals(e.Result)) CreateFile(e.Result);
-                    else Launcher.Notify("Skipping updating file \"" + LocalPath + "\" because it the downloaded file is invalid.");
+                    if (e.Error != null)
+                    {
+                        Launcher.Notify("Skipping updating file \"" + LocalPath + "\" because it could not be downloaded.");
+                        OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.Error));
+                    }
+                    else if (e.Cancelled)
+                    {
+                        OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.Cancelled));
+                    }
+                    else if (HashEquals(e.Result))
+                    {
+                        CreateFile(e.Result);
+                    }
+                    else
+                    {
+                        Launcher.Notify("Skipping updating file \"" + LocalPath + "\" because it the downloaded file is invalid.");
+                        OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.Error));
+                    }
                 };
 
                 client.DownloadDataAsync(DownloadUri);
