@@ -148,7 +148,7 @@ namespace Redress
         /// <returns>The package update object.</returns>
         public PackageUpdate GetUpdate()
         {
-            return new PackageUpdate(UpdateItems);
+            return new PackageUpdate(Version, UpdateItems);
         }
 
         /// <summary>

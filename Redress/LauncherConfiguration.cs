@@ -43,6 +43,11 @@ namespace Redress
         public static readonly string InstalledFlagFile = Path.Combine(LauncherPath, "installed.txt");
 
         /// <summary>
+        /// Provides the path to the text file containing the version number of the application on the local system.
+        /// </summary>
+        public static readonly string ApplicationVersionFile = Path.Combine(LauncherPath, "appversion.txt");
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="LauncherConfiguration"/> class.
         /// </summary>
         /// <param name="document">The XML document that will be parsed to create the configuration.</param>

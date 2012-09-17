@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Redress.Support;
+using System.IO;
 
 namespace Redress
 {
@@ -15,6 +16,7 @@ namespace Redress
         private int itemsCompleted;
         private long downloadedBytes;
         private bool inProgress;
+        private int version;
 
         /// <summary>
         /// Gets the total size of the update in bytes.
@@ -30,8 +32,9 @@ namespace Redress
         /// Initializes a new instance of the <see cref="PackageUpdate"/> class.
         /// </summary>
         /// <param name="items">A collection of items to update.</param>
-        public PackageUpdate(IEnumerable<Item> items)
+        public PackageUpdate(int version, IEnumerable<Item> items)
         {
+            this.version = version;
             itemQueue = new Queue<Item>(items);
             Size = itemQueue.Sum((item) => { return item.SizeBytes; });
         }
@@ -67,6 +70,10 @@ namespace Redress
             base.OnOperationCompleted(e);
 
             inProgress = false;
+
+            var isUpToDate = e.Result == OperationResult.Success || e.Result == OperationResult.NoAction;
+
+            if (isUpToDate) File.WriteAllText(LauncherConfiguration.LauncherLocalVersionFile, version.ToString());
         }
 
         /// <summary>
@@ -74,9 +81,14 @@ namespace Redress
         /// </summary>
         private void UpdateAsync()
         {
-            if (CancellationPending || itemQueue.Count == 0)
+            if (CancellationPending )
             {
                 OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.Cancelled));
+                return;
+            }
+            else if (itemQueue.Count == 0)
+            {
+                OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.NoAction));
                 return;
             }
 
