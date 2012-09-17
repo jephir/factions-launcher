@@ -25,6 +25,8 @@ namespace Redress
             {
                 var package = document.Element("package");
 
+                Version = Convert.ToInt32(package.Attribute("version"));
+
                 Items = (from node in package.Elements("item")
                          select new Item(
                              node.Attribute("path").Value,
@@ -48,6 +50,11 @@ namespace Redress
                 throw new XmlException("The package manifest is missing required elements or attributes.");
             }
         }
+
+        /// <summary>
+        /// Gets the version number of the current package.
+        /// </summary>
+        public int Version { get; private set; }
 
         /// <summary>
         /// Gets a list of items in the current package.
