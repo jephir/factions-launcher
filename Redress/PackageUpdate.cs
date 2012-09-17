@@ -73,7 +73,7 @@ namespace Redress
 
             var isUpToDate = e.Result == OperationResult.Success || e.Result == OperationResult.NoAction;
 
-            if (isUpToDate) File.WriteAllText(LauncherConfiguration.LauncherLocalVersionFile, version.ToString());
+            if (isUpToDate) File.WriteAllText(Configuration.LauncherLocalVersionFile, version.ToString());
         }
 
         /// <summary>

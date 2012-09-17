@@ -45,7 +45,7 @@ namespace Redress
 
         public void Update(Action<Uri> callback)
         {
-            var configuration = LauncherConfiguration.Load();
+            var configuration = Configuration.Load();
 
             callback(configuration.BrowserUri);
 
@@ -76,7 +76,7 @@ namespace Redress
             }
         }
 
-        private void UpdateGameAsync(LauncherConfiguration config)
+        private void UpdateGameAsync(Configuration config)
         {
             if (File.Exists(ErrorFile)) File.Delete(ErrorFile);
 
@@ -140,7 +140,7 @@ namespace Redress
             package.VerifyAsync();
         }
 
-        private void UpdateLauncher(LauncherConfiguration config)
+        private void UpdateLauncher(Configuration config)
         {
             Status = "Updating...";
 

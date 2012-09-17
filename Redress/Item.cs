@@ -22,10 +22,10 @@ namespace Redress
         /// <param name="hash">The SHA-256 hash of the item.</param>
         public Item(string localPath, string remoteUri, string size, string hash)
         {
-            var adjustedLocalPath = Path.Combine(LauncherConfiguration.ContentPath, localPath.Replace('/', '\\'));
+            var adjustedLocalPath = Path.Combine(Configuration.ContentPath, localPath.Replace('/', '\\'));
 
             // The item must be located under the content directory
-            if (LauncherConfiguration.IsPathUnderContentDirectory(adjustedLocalPath)) LocalPath = adjustedLocalPath;
+            if (Configuration.IsPathUnderContentDirectory(adjustedLocalPath)) LocalPath = adjustedLocalPath;
             else throw new ArgumentException("Local path is not under content directory.", "localPath");
 
             DownloadUri = new Uri(remoteUri);

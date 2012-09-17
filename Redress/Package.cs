@@ -35,14 +35,14 @@ namespace Redress
                              node.Attribute("sha256").Value
                          )).ToList();
 
-                var applicationPath = Path.Combine(LauncherConfiguration.ContentPath, package.Element("application").Attribute("path").Value);
-                if (LauncherConfiguration.IsPathUnderContentDirectory(applicationPath)) ApplicationPath = applicationPath;
+                var applicationPath = Path.Combine(Configuration.ContentPath, package.Element("application").Attribute("path").Value);
+                if (Configuration.IsPathUnderContentDirectory(applicationPath)) ApplicationPath = applicationPath;
                 else throw new ArgumentException("Application path is not under content directory.", "document");
 
                 ApplicationArguments = package.Element("application").Attribute("arguments").Value;
 
-                var installerPath = Path.Combine(LauncherConfiguration.ContentPath, package.Element("installer").Attribute("path").Value);
-                if (LauncherConfiguration.IsPathUnderContentDirectory(installerPath)) InstallerPath = installerPath;
+                var installerPath = Path.Combine(Configuration.ContentPath, package.Element("installer").Attribute("path").Value);
+                if (Configuration.IsPathUnderContentDirectory(installerPath)) InstallerPath = installerPath;
                 else throw new ArgumentException("Installer path is not under content directory.", "document");
             }
             catch (NullReferenceException)
@@ -96,7 +96,7 @@ namespace Redress
         /// </summary>
         /// <param name="config">The configuration to use.</param>
         /// <returns>The package object.</returns>
-        public static Package Load(LauncherConfiguration config)
+        public static Package Load(Configuration config)
         {
             using (var client = new WebClient())
             {
@@ -157,7 +157,7 @@ namespace Redress
         public void RunApplication()
         {
             // Run the installer if the application is not installed
-            if (!File.Exists(LauncherConfiguration.InstalledFlagFile))
+            if (!File.Exists(Configuration.InstalledFlagFile))
             {
                 var installer = new ProcessStartInfo();
                 installer.FileName = InstallerPath;
@@ -168,7 +168,7 @@ namespace Redress
 
                     if (process.ExitCode == 0)
                     {
-                        using (var writer = File.CreateText(LauncherConfiguration.InstalledFlagFile))
+                        using (var writer = File.CreateText(Configuration.InstalledFlagFile))
                         {
                             writer.WriteLine(DateTime.Now.ToBinary());
                         }

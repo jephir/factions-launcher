@@ -10,7 +10,7 @@ namespace Redress
     /// <summary>
     /// Represents the launcher configuration.
     /// </summary>
-    class LauncherConfiguration
+    class Configuration
     {
         /// <summary>
         /// Provides the path to the directory containing the launcher configuration files.
@@ -48,11 +48,11 @@ namespace Redress
         public static readonly string ApplicationVersionFile = Path.Combine(LauncherPath, "appversion.txt");
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LauncherConfiguration"/> class.
+        /// Initializes a new instance of the <see cref="Configuration"/> class.
         /// </summary>
         /// <param name="document">The XML document that will be parsed to create the configuration.</param>
         /// <param name="localVersion">The version number of the launcher on the system.</param>
-        LauncherConfiguration(XDocument document, int localVersion)
+        Configuration(XDocument document, int localVersion)
         {
             LauncherLocalVersion = localVersion;
 
@@ -108,7 +108,7 @@ namespace Redress
         /// Returns the configuration parsed from the server.
         /// </summary>
         /// <returns>The configuration object.</returns>
-        public static LauncherConfiguration Load()
+        public static Configuration Load()
         {
             var xml = LoadXml();
 
@@ -127,7 +127,7 @@ namespace Redress
                 localLauncherVersionNumber = Convert.ToInt32(File.ReadAllText(LauncherLocalVersionFile));
             }
 
-            return new LauncherConfiguration(document, localLauncherVersionNumber);
+            return new Configuration(document, localLauncherVersionNumber);
         }
 
         /// <summary>
