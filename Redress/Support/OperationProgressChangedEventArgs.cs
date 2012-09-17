@@ -2,7 +2,7 @@
 
 namespace Redress.Support
 {
-    class AsyncOperationProgressChangedEventArgs : EventArgs
+    class OperationProgressChangedEventArgs : EventArgs
     {
         public long SavedBytes { get; set; }
         public long CompletedBytes { get; set; }

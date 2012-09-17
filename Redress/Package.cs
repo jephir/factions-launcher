@@ -123,11 +123,11 @@ namespace Redress
             {
                 if (CancellationPending)
                 {
-                    OnOperationCompleted(new EventArgs());
+                    OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.Cancelled));
                     return;
                 }
 
-                OnOperationProgressChanged(new AsyncOperationProgressChangedEventArgs
+                OnOperationProgressChanged(new OperationProgressChangedEventArgs
                 {
                     PackageProgress = (double)checkedBytes / SizeBytes * 100,
                     CompletedBytes = checkedBytes,
@@ -139,7 +139,7 @@ namespace Redress
                 checkedBytes += item.SizeBytes;
             }
 
-            OnOperationCompleted(new EventArgs());
+            OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.Success));
         }
 
         /// <summary>

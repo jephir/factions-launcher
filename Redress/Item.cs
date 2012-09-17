@@ -69,7 +69,7 @@ namespace Redress
         public void UpdateAsync()
         {
             if (!Validate()) DownloadAsync();
-            else OnOperationCompleted(new EventArgs());
+            else OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.NoAction));
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Redress
                     var bytesChange = bytesReceived - lastBytesReceived;
                     var bytesPerSecond = (float)bytesChange / timeSpan.Milliseconds * 1000;
 
-                    OnOperationProgressChanged(new AsyncOperationProgressChangedEventArgs
+                    OnOperationProgressChanged(new OperationProgressChangedEventArgs
                     {
                         CompletedBytes = e.BytesReceived,
                         SpeedBytes = bytesPerSecond,
@@ -109,7 +109,7 @@ namespace Redress
                 client.DownloadDataCompleted += (sender, e) =>
                 {
                     if (e.Error != null) Launcher.Notify("Skipping updating file \"" + LocalPath + "\" because it could not be downloaded.");
-                    else if (e.Cancelled) OnOperationCompleted(new EventArgs());
+                    else if (e.Cancelled) OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.Cancelled));
                     else if (HashEquals(e.Result)) CreateFile(e.Result);
                     else Launcher.Notify("Skipping updating file \"" + LocalPath + "\" because it the downloaded file is invalid.");
                 };
@@ -143,7 +143,7 @@ namespace Redress
 
             File.WriteAllBytes(LocalPath, hashBytes);
 
-            OnOperationCompleted(new EventArgs());
+            OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.Success));
         }
     }
 }

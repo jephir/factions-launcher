@@ -62,7 +62,7 @@ namespace Redress
             if (item != null) item.CancelAsync();
         }
 
-        protected override void OnOperationCompleted(EventArgs e)
+        protected override void OnOperationCompleted(OperationCompletedEventArgs e)
         {
             base.OnOperationCompleted(e);
 
@@ -76,7 +76,7 @@ namespace Redress
         {
             if (CancellationPending || itemQueue.Count == 0)
             {
-                OnOperationCompleted(new EventArgs());
+                OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.Cancelled));
                 return;
             }
 
@@ -87,7 +87,7 @@ namespace Redress
                 var currentDownloadedBytes = downloadedBytes + e.CompletedBytes;
                 var percent = (double)currentDownloadedBytes / Size * 100;
 
-                OnOperationProgressChanged(new AsyncOperationProgressChangedEventArgs
+                OnOperationProgressChanged(new OperationProgressChangedEventArgs
                 {
                     PackageProgress = percent,
                     SpeedBytes = e.SpeedBytes,
@@ -105,7 +105,7 @@ namespace Redress
                 downloadedBytes += item.SizeBytes;
 
                 if (itemQueue.Count > 0) UpdateAsync();
-                else OnOperationCompleted(new EventArgs());
+                else OnOperationCompleted(new OperationCompletedEventArgs(OperationResult.Success));
             };
 
             item.DownloadAsync();

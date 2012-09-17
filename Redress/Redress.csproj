@@ -46,6 +46,7 @@
     <Compile Include="PackageUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\AsyncOperation.cs" />
+    <Compile Include="Support\OperationCompletedEventArgs.cs" />
     <Compile Include="Support\OperationProgressChangedEventArgs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
