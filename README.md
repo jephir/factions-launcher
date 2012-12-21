@@ -2,6 +2,8 @@
 
 The legacy game launcher for Factions. It handles updating and installing the game.
 
+![Screenshot](http://i.minus.com/ibjlQAYQQ1C67v.PNG)
+
 ## Server Requirements
 
 The launcher works with a standard HTTP server such as Apache or nginx.
